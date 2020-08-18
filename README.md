@@ -1,19 +1,11 @@
-# date
+# 项目描述：总共三个页面，当天信息，当月假期，当年假期
+头部，搜索框，tab是每个页面都有的组件
+    - 头部的title根据路由的切换而动态改变，title保存到store中，我们在watch中监听route的改变动态的切换title
+    - tab： tab动态生成时间，写一个工具函数
+    - search：根据搜索的内容请求数据，
 
-## Project setup
-```
-yarn install
-```
+封装请求：由于跨域问题，在vue.config.js中设置了代理进行跨域，
+请求使用axios，我们对axios进行了多次封装
+对请求后的数据进行一系列的处理（数据保存在store中）
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+对用户输入的数据进行处理再发送请求

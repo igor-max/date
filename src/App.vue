@@ -1,32 +1,39 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <default-header>
+        {{ headerTitle }}
+    </default-header>
+    <search-input />
+    <default-tab />
     <router-view/>
   </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+    import DefaultHeader from "@/components/header";
+    import DefaultTab from "@/components/tab";
+    import SearchInput from "@/components/searchInput";
+    import { mapState } from "vuex";
+    export default {
+        components: {
+            DefaultHeader,
+            DefaultTab,
+            SearchInput
+        },
+        computed: {
+            ...mapState(['headerTitle'])
+        },
+        created() {
+            this.$store.commit('setPlaceholder', 'day');
+        },
+        watch: {
+            $route(to, from){
+                const routeName = to.path === "/" ? "day" : to.path.replace(/\//, '');
+                this.$store.commit('setHeaderTitle', routeName);
+                this.$store.commit('setMaxlength', routeName);
+                this.$store.commit('setPlaceholder', routeName);
+            }
+        }
+    }
+</script>
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
